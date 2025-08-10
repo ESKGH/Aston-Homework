@@ -1,12 +1,25 @@
 .header {
   background-color: #004080;
-  width: 100%;
   color: white;
-  padding: 16px 24px;
+  padding: 9px 24px;
   font-size: 1.5rem;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.header-btn-container {
+  width: 40%;
+  padding: 0;
+  display: flex; 
+  align-items: center; 
+}
+
+.header-btn-container button {
+  margin-right: 10px; 
+}
+
+.header-btn-container button:last-child {
+  margin-right: 0; 
 }
