@@ -5,7 +5,7 @@ export const ThemeSwitcher = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <Button onClick={toggleTheme} aria-label="Переключить тему">
+    <Button onClick={toggleTheme}>
       {theme === 'light' ? 'Light' : 'Dark'}
     </Button>
   );

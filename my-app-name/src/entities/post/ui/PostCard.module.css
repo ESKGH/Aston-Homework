@@ -30,12 +30,11 @@
 
 .postCard h3 {
   margin: 0 0 8px 0;
-  font-size: 1.25rem;
+  font-size: 400;
   color: var(--text-color, #333);
 }
 
 .postCard p {
   margin: 20px;
   color: var(--content-color, #555);
-  line-height: 1.4;
 }
