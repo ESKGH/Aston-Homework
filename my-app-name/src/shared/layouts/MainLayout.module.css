@@ -1,0 +1,17 @@
+.container {
+display: 'flex';
+flex-direction: column;
+width: 100%;
+min-height: 100vh;
+}
+
+.light {
+  background-color: #f1e7e7;
+  color: #000000;
+}
+
+
+.dark {
+  background-color: #121212;
+  color: #eeeeee;
+}
