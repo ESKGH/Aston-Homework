@@ -1,0 +1,28 @@
+#root {
+  max-width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+}
+.content {
+  display: grid;
+  grid-template-columns: 3fr 1fr; 
+  gap: 20px;
+  padding: 20px;
+  align-items: start; 
+}
+
+.postsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.commentsSection {
+  min-width: 250px;
+}

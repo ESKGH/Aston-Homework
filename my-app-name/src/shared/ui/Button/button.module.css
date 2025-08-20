@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:500');
+
+.btn {
+  margin: 0;
+  padding: 12px 28px;
+  border-radius: 6px;
+  border: none;
+  background: #FC6E51;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #e55b40; 
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
