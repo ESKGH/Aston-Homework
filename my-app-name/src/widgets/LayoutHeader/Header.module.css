@@ -2,24 +2,26 @@
   background-color: #004080;
   color: white;
   padding: 9px 24px;
-  font-size: 1.5rem;
+  font-size: 800;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.header-btn-container {
-  width: 40%;
+.header_btn_container{
+  width: 30%;
   padding: 0;
   display: flex; 
   align-items: center; 
+  justify-content: space-around;
 }
 
-.header-btn-container button {
-  margin-right: 10px; 
+
+/* .header-btn-container button {
+  margin-right: 0; 
 }
 
 .header-btn-container button:last-child {
   margin-right: 0; 
-}
+} */

@@ -19,7 +19,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ header, footer, children }) => 
       data-theme={theme}
     >
       {header}
-      <main style={{ flex: '1 0 auto', padding: '24px' }}>
+      <main  className ={`${styles.main}`}>
         {children}
       </main>
       {footer}

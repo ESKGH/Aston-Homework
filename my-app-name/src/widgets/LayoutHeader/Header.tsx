@@ -12,8 +12,8 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
       className={styles.header}
     >
       <div>POSTS project</div>
-      <div className='header-btn-container'>
-        <Button onClick={onOpenModal} style={{ marginRight: '10px' }}>
+      <div className={styles.header_btn_container}>
+        <Button onClick={onOpenModal}>
           О проекте
         </Button>
         <ThemeSwitcher />
