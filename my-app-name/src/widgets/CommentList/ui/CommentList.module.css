@@ -1,0 +1,44 @@
+.commentList {
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  padding: 12px 16px;
+  background-color: var(--background-color, #fff);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: left;
+}
+
+.commentItem {
+  border-bottom: 1px solid var(--border-color, #eee);
+  padding: 8px 0;
+}
+
+.commentItem:last-child {
+  border-bottom: none;
+}
+
+.commentAuthor {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 2px;
+  color: var(--text-color, #333);
+}
+
+.commentText {
+  font-size: 14px;
+  color: var(--content-color, #555);
+  margin: 0;
+}
+
+.light {
+  --border-color: #ddd;
+  --background-color: #fff;
+  --text-color: #333;
+  --content-color: #555;
+}
+
+.dark {
+  --border-color: #444;
+  --background-color: #1e1e1e;
+  --text-color: #fff;
+  --content-color: #aaa;
+}
