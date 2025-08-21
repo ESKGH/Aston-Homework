@@ -1,0 +1,14 @@
+.tabs {
+  display: flex;
+  gap: 12px;
+}
+
+.tabs a {
+  text-decoration: none;
+  color: #555;
+}
+
+.active {
+  font-weight: bold;
+  border-bottom: 2px solid #000;
+}

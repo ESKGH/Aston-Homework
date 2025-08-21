@@ -1,26 +1,34 @@
-import React, { useMemo } from 'react';
-import PostCard from '../../entities/post/ui/PostCard';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './PostList.module.css';
 
 export type Post = {
   id: number;
   title: string;
-  content: string;
+  body: string;
 };
 
-type PostListProps = {
+interface PostListProps {
   posts: Post[];
-};
+}
 
 const PostList: React.FC<PostListProps> = ({ posts }) => {
-  const postItems = useMemo(
-    () => posts.map((post) => (
-      <PostCard key={post.id} title={post.title} content={post.content} />
-    )),
-    [posts]
-  );
+  const navigate = useNavigate();
 
-  return <div className={styles.postList}>{postItems}</div>;
+  return (
+    <div className={styles.postList}>
+      {posts.map((post) => (
+        <div
+          key={post.id}
+          className={styles.postCard}
+          onClick={() => navigate(`/posts/${post.id}`)}
+        >
+          <h3>{post.title}</h3>
+          <p>{post.body}</p>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default PostList;
