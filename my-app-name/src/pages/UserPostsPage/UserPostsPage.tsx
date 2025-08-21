@@ -22,7 +22,7 @@ const UserPostsPage: React.FC = () => {
   return (
     <div className={styles.page}>
       <h2>Посты пользователя {id}</h2>
-      <PostList posts={posts} minLength={0} isLoading={false} />
+      <PostList posts={posts} />
     </div>
   );
 };
