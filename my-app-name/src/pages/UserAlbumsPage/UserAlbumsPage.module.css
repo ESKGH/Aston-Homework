@@ -1,0 +1,24 @@
+.page {
+  padding: 20px;
+}
+
+.message {
+  padding: 20px;
+  color: gray;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.albumItem {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.albumItem:hover {
+  transform: translateY(-2px);
+}
