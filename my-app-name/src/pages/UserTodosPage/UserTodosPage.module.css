@@ -1,0 +1,13 @@
+.page {
+  padding: 20px;
+}
+
+.message {
+  padding: 20px;
+  color: gray;
+}
+
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
