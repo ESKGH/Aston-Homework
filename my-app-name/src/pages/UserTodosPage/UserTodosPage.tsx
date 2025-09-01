@@ -1,35 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
+import UserTabs from '../../widgets/UserTabs/UserTabs';
+import { todosApi } from '../../entities/todo/api/todosApi';
 import styles from './UserTodosPage.module.css';
 
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
-
 const UserTodosPage: React.FC = () => {
-  const { id } = useParams();
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams<{ id: string }>();
+  const userId = Number(id);
+  const { data: todos = [], isLoading } = todosApi.useGetUserTodosQuery(userId);
 
-  useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users/${id}/todos`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTodos(data);
-        setLoading(false);
-      });
-  }, [id]);
-
-  if (loading) return <p className={styles.message}>Загрузка...</p>;
+  if (!id) return <p className={styles.message}>Некорректный пользователь</p>;
+  if (isLoading) return <p className={styles.message}>Загрузка...</p>;
 
   return (
     <div className={styles.page}>
-      <h2>Список дел пользователя {id}</h2>
-      <ul>
+      <UserTabs userId={userId} />
+      <h2>Задачи пользователя {id}</h2>
+      <ul className={styles.list}>
         {todos.map((todo) => (
-          <li key={todo.id} className={todo.completed ? styles.done : ''}>
+          <li key={todo.id} className={styles.item}>
+            <input type="checkbox" checked={todo.completed} readOnly />
             {todo.title}
           </li>
         ))}

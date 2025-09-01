@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import CommentList from '../../widgets/CommentList/ui/CommentList';
 import styles from './PostDetailPage.module.css';
-
-interface Post {
-  id: number;
-  userId: number;
-  title: string;
-  body: string;
-}
+import { postsApi } from '../../entities/post/api/postsApi';
 
 const PostDetailPage: React.FC = () => {
-  const { id } = useParams();
-  const [post, setPost] = useState<Post | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams<{ id: string }>();
+  const postId = id ? Number(id) : null;
 
-  useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPost(data);
-        setLoading(false);
-      });
-  }, [id]);
+  const { data: post, isLoading, isError } = postsApi.useGetPostByIdQuery(postId!, {
+    skip: !postId,
+  });
 
-  if (loading) return <p className={styles.message}>Загрузка...</p>;
-  if (!post) return <p className={styles.message}>Пост не найден</p>;
+  if (!postId) return <p className={styles.message}>Некорректный пост</p>;
+  if (isLoading) return <p className={styles.message}>Загрузка…</p>;
+  if (isError || !post) return <p className={styles.message}>Пост не найден</p>;
 
   return (
     <div className={styles.page}>
@@ -36,6 +26,11 @@ const PostDetailPage: React.FC = () => {
         <Link to={`/users/${post.userId}/albums`}>Альбомы автора</Link>
         <Link to={`/users/${post.userId}/todos`}>Список дел автора</Link>
       </div>
+
+      {/* Комментарии через CommentList */}
+      <section className={styles.comments}>
+        <CommentList postId={post.id} />
+      </section>
     </div>
   );
 };

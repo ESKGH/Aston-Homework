@@ -2,51 +2,50 @@ import { useState, useCallback } from 'react';
 import styles from './CommentList.module.css';
 import useTheme from '../../../shared/lib/theme/UseTheme';
 import Button from '../../../shared/ui/Button/Button';
+import { commentsApi } from '../../../entities/comment/api/commentsApi';
 
-
-type Comment = {
-  id: number;
-  author: string;
-  text: string;
+type CommentListProps = {
+  postId: number;
+  initialOpen?: boolean;
 };
 
-const comments: Comment[] = [
-  { id: 1, author: 'Андрей', text: 'Очень полезный пост!' },
-  { id: 2, author: 'Мария', text: 'Спасибо за информацию 🙌' },
-  { id: 3, author: 'Иван', text: 'Жду новых публикаций.' },
-];
-
-const CommentList: React.FC = () => {
+const CommentList: React.FC<CommentListProps> = ({ postId, initialOpen = true }) => {
   const { theme } = useTheme();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(initialOpen);
+
+  const { data: comments, isLoading, isError } = commentsApi.useGetPostCommentsQuery(postId);
 
   const toggleComments = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
 
   return (
-    <div
-      className={`${styles.commentList} ${
-        theme === 'light' ? styles.light : styles.dark
-      }`}
-    >
-         <Button onClick={toggleComments}>
+    <div className={`${styles.commentList} ${theme === 'light' ? styles.light : styles.dark}`}>
+      <div className={styles.headerRow}>
+        <h3 className={styles.heading}>Комментарии</h3>
+        <Button onClick={toggleComments}>
           {isOpen ? 'Свернуть комментарии' : 'Показать комментарии'}
         </Button>
-      {/* <button className={styles.toggleBtn} onClick={toggleComments}>
-        {isOpen ? 'Свернуть комментарии' : 'Показать комментарии'}
-      </button> */}
-      
-      
+      </div>
+
       {isOpen && (
-        <div className={styles.commentContainer}>
-          {comments.map((c) => (
-            <div key={c.id} className={styles.commentItem}>
-              <div className={styles.commentAuthor}>{c.author}</div>
-              <p className={styles.commentText}>{c.text}</p>
+        <>
+          {isLoading && <p className={styles.message}>Загрузка комментариев…</p>}
+          {isError && <p className={styles.error}>Не удалось загрузить комментарии</p>}
+          {!isLoading && !isError && comments && (
+            <div className={styles.commentContainer}>
+              {comments.map((c) => (
+                <div key={c.id} className={styles.commentItem}>
+                  <div className={styles.commentAuthor}>
+                    <span className={styles.name}>{c.name}</span>
+                    <span className={styles.email}> · {c.email}</span>
+                  </div>
+                  <p className={styles.commentText}>{c.body}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );

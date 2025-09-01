@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import PostList, { type Post } from '../../widgets/PostList/PostList';
+import PostList from '../../widgets/PostList/PostList';
+import UserTabs from '../../widgets/UserTabs/UserTabs';
+import { postsApi } from '../../entities/post/api/postsApi';
 import styles from './UserPostsPage.module.css';
 
 const UserPostsPage: React.FC = () => {
-  const { id } = useParams();
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams<{ id: string }>();
+  const userId = Number(id);
+  const { data: posts = [], isLoading } = postsApi.useGetPostsQuery();
 
-  useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPosts(data);
-        setLoading(false);
-      });
-  }, [id]);
+  const userPosts = posts.filter((post) => post.userId === userId);
 
-  if (loading) return <p className={styles.message}>Загрузка...</p>;
+  if (!id) return <p className={styles.message}>Некорректный пользователь</p>;
+  if (isLoading) return <p className={styles.message}>Загрузка...</p>;
 
   return (
     <div className={styles.page}>
+      <UserTabs userId={userId} />
       <h2>Посты пользователя {id}</h2>
-      <PostList posts={posts} />
+      <PostList posts={userPosts} />
     </div>
   );
 };

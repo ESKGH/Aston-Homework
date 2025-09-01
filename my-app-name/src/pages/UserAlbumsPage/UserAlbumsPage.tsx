@@ -1,39 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import UserTabs from '../../widgets/UserTabs/UserTabs';
 import styles from './UserAlbumsPage.module.css';
+import { albumsApi } from '../../entities/albums/api/albumsApi';
 
-interface Album {
+type Album = {
   id: number;
   title: string;
-}
+};
 
 const UserAlbumsPage: React.FC = () => {
-  const { id } = useParams();
-  const [albums, setAlbums] = useState<Album[]>([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const userId = id ? Number(id) : null;
 
-  useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users/${id}/albums`)
-      .then((res) => res.json())
-      .then((data) => {
-        setAlbums(data);
-        setLoading(false);
-      });
-  }, [id]);
+  const { data: albums, isLoading, isError } = albumsApi.useGetUserAlbumsQuery(userId!, {
+    skip: !userId,
+  });
 
-  if (loading) return <p className={styles.message}>Загрузка...</p>;
+  if (!userId) return <p className={styles.message}>Некорректный пользователь</p>;
+  if (isLoading) return <p className={styles.message}>Загрузка…</p>;
+  if (isError) return <p className={styles.message}>Ошибка загрузки альбомов</p>;
 
   return (
     <div className={styles.page}>
-      <h2>Альбомы пользователя {id}</h2>
+      <UserTabs userId={userId} />
+      <h2>Альбомы пользователя {userId}</h2>
       <ul className={styles.list}>
-        {albums.map((album) => (
-          <li
-            key={album.id}
-            className={styles.albumItem}
-            onClick={() => navigate(`/albums/${album.id}/photos`)}
-          >
+        {albums?.map((album) => (
+          <li key={album.id} className={styles.item}>
             {album.title}
           </li>
         ))}
@@ -43,4 +38,3 @@ const UserAlbumsPage: React.FC = () => {
 };
 
 export default UserAlbumsPage;
-

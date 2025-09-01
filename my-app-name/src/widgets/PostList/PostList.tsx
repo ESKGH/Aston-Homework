@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import PostCard from '../../entities/post/ui/PostCard';
 import styles from './PostList.module.css';
 
 export type Post = {
@@ -20,11 +21,10 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
       {posts.map((post) => (
         <div
           key={post.id}
-          className={styles.postCard}
           onClick={() => navigate(`/posts/${post.id}`)}
+          style={{ cursor: 'pointer' }}
         >
-          <h3>{post.title}</h3>
-          <p>{post.body}</p>
+          <PostCard title={post.title} content={post.body} />
         </div>
       ))}
     </div>
